@@ -4,6 +4,9 @@
 ### Angular
 - `ng new week4tut` 
 - `ng serve`
+- `ng build`
+- `ng generate component Account`
+- `ng generate component Login`
 
 ### Npm
 - `npm install bootstrap --save` 
