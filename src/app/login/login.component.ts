@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] // Fixed typo from styleUrl to styleUrls
+  styleUrls: ['./login.component.css'] 
 })
 export class LoginComponent {
 
@@ -23,7 +23,6 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   itemClicked() {
-    console.log(this.username, this.password);
     alert(`Username: ${this.username} and Password: ${this.password}`);
     let c = { username: this.username, password: this.password };
     let find = this.listUsers.some((e) => e.username === c.username && e.password === c.password);
