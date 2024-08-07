@@ -1,12 +1,13 @@
 # Week 4 Tutorial
 
 
-### Angular (in node)
+### Angular
 - `ng new week4tut` 
 - `ng serve`
 
-### Npm (installing modules)
+### Npm
 - `npm install bootstrap --save` 
+- `npm install –g @angular/cli` 
 
 ### GIT
 - `git init` 
