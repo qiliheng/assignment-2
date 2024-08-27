@@ -1,19 +1,13 @@
 <form>
+  <div>
+    <input type="text" name="email" [(ngModel)]="email" id="form2Example1" class="form-control" />
+    <label class="form-label" for="form2Example1">Email address</label>
+  </div>
 
+  <div>
+    <input type="text" name="password" [(ngModel)]="password" id="form2Example2" class="form-control" />
+    <label class="form-label" for="form2Example2">Password</label>
+  </div>
 
-    <div>
-      <input type="text" name="username" [(ngModel)]="username" id="form2Example1" class="form-control">
-      <label class="form-label" for="form2Example1">Email address</label>
-
-    </div>
-
-    <div>
-      <input type="text" name="password" [(ngModel)]="password" id="form2Example2" class="form-control">
-      <label class="form-label" for="form2Example2">Password</label>
-    </div>
-
-
-
+  <button (click)="submit()" class="btn btn-primary">Submit</button>
 </form>
-
-<button (click)="itemClicked()">submit</button>
