@@ -1,1 +1,1 @@
-[{"userid":100,"username":"email1@com.au","userbirthdate":"2004-01-14","userage":3000},{"userId":20000,"username":"email2@com.au","userbirthdate":"2004-01-14","userage":20000},{"userId":3,"username":"email@com.au","userbirthdate":"2004-01-14","userage":30000},{"userid":0,"username":null,"userbirthdate":null,"userage":0}]
+[{"userid":100,"username":"email1@com.au","userbirthdate":"2004-01-14","userage":30},{"userId":20000,"username":"email2@com.au","userbirthdate":"2004-01-14","userage":20000},{"userId":3,"username":"email@com.au","userbirthdate":"2004-01-14","userage":30000}]
