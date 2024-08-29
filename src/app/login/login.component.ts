@@ -63,6 +63,7 @@ export class LoginComponent {
           this.router.navigateByUrl('/account');
         } else {
           alert("email or password incorrect");
+          this.router.navigateByUrl('/login');
         }
       }, error => {
         console.error('An error occurred:', error);

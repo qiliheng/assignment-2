@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -21,12 +22,16 @@ export class ProfileComponent {
   userbirthdate = '';
   userage = 0;
 
-
-  constructor(private httpClient: HttpClient) {
-    this.username = sessionStorage.getItem('username')!;
-    this.userbirthdate = sessionStorage.getItem('userbirthdate')!;
-    this.userage = Number(sessionStorage.getItem('userage')!);
-    this.userid = Number(sessionStorage.getItem('userid')!);
+  constructor(
+    private httpClient: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.username = sessionStorage.getItem('username') || '';
+      this.userbirthdate = sessionStorage.getItem('userbirthdate') || '';
+      this.userage = Number(sessionStorage.getItem('userage') || 0);
+      this.userid = Number(sessionStorage.getItem('userid') || 0);
+    }
   }
 
   editFunc() {
@@ -37,7 +42,8 @@ export class ProfileComponent {
       "userage": this.userage
     };
 
-   this.httpClient.post<any>(BACKEND_URL + '/loginafter', userobj, httpOptions)
-  .subscribe((m: any) => { alert(JSON.stringify(m)); });
+    this.httpClient.post<any>(BACKEND_URL + '/loginafter', userobj, httpOptions)
+      .subscribe((m: any) => { (JSON.stringify(m)); });
+      alert("successful")
   }
 }
