@@ -1,34 +1,35 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = function(req, res) {
-    var newUser = req.body;
+    const newUser = req.body;
+    const usersFilePath = path.join(__dirname, '../data/users.json');
 
-    fs.readFile('./data/users.json', 'utf8', function(err, data) {
+    fs.readFile(usersFilePath, 'utf8', (err, data) => {
         if (err) {
-            console.error(err);
-            return res.status(500).send('Server error');
+            console.error('Failed to read users.json:', err);
+            res.status(500).json({ error: 'Failed to read users.json' });
+            return;
         }
-        
+
         let users = JSON.parse(data);
 
         // Check if the username already exists
-        let userExists = users.find(user => user.username === newUser.username);
-        if (userExists) {
-            return res.status(400).send({ ok: false, error: 'Username already exists' });
+        if (users.find(user => user.username === newUser.username)) {
+            res.status(400).json({ error: 'Username already exists' });
+            return;
         }
 
-        // Add the new user
         users.push(newUser);
 
-        // Save the updated users list
-        fs.writeFile('./data/users.json', JSON.stringify(users, null, 2), 'utf8', function(err) {
+        fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), 'utf8', (err) => {
             if (err) {
-                console.error(err);
-                return res.status(500).send('Server error');
+                console.error('Failed to write to users.json:', err);
+                res.status(500).json({ error: 'Failed to save user' });
+                return;
             }
-            res.send({ ok: true, message: 'User created successfully' });
+
+            res.json({ ok: true, message: 'User created successfully' });
         });
     });
 };
-

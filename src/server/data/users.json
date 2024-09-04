@@ -34,4 +34,9 @@
     "pwd": "user123",
     "role": "chat-user"
   },
+  {
+    "username": "12345@email.com",
+    "pwd": "123",
+    "role": "chat-user"
+  }
 ]

@@ -19,7 +19,10 @@ app.use('/server/data', express.static(path.join(__dirname, 'data')));
 // Login routes
 app.post('/login', require('./router/postLogin'));
 app.post('/loginafter', require('./router/postLoginAfter'));
-app.post('/createUser', require('./router/postCreateUser'));
+app.post('/createUser', (req, res) => {
+    // Your user creation logic here
+    res.json({ ok: true });
+  });
 
 
 

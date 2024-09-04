@@ -7,10 +7,11 @@ const httpOptions = {
 };
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-create-user',
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
-  imports: [FormsModule] // Add FormsModule here
+  styleUrls: ['./user.component.css']
 })
 export class UserComponent {
   username = '';
@@ -24,8 +25,7 @@ export class UserComponent {
     const newUser = {
       username: this.username,
       pwd: this.password,
-      userbirthdate: this.birthdate,
-      userage: this.age
+      role: 'chat-user',
     };
 
     this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/createUser', newUser, httpOptions)
@@ -44,3 +44,4 @@ export class UserComponent {
       );
   }
 }
+
