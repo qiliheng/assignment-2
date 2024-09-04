@@ -21,7 +21,12 @@ app.use('/server/data', express.static(path.join(__dirname, 'data')));
 app.post('/login', require('./router/postLogin'));
 app.post('/joinChannel', require('./router/postJoinChannel')); 
 app.post('/CreateGroup', require('./router/postCreateGroup'));
-app.post('/CreateChanne;', require('./router/postCreateChannel'));
+app.post('/createChannel', require('./router/postCreateChannel'));
+app.post('/deleteGroup', require('./router/postDeleteGroup'));
+app.post('/deleteChannel', require('./router/postDleteChannel'));
+app.post('/promoteToGroupAdmin', require('./router/postPromoteToGroupAdmin'));
+app.post('/promoteToSuperAdmin', require('./router/postPromoteToSuperAdmin'));
+app.post('/removeUser', require('./router/postRemoveUser'));
 // Require your postJoinGroup file
 // Add the route for joining a group
 app.post('/joinGroup', postJoinGroup);
@@ -49,153 +54,6 @@ app.post('/deleteUser', (req, res) => {
     });
 });
 
-
-
-// Promote a user to Group Admin
-app.post('/promoteToGroupAdmin', (req, res) => {
-    const userId = req.body.userId;
-    const usersPath = './data/users.json';
-    const extendedUsersPath = './data/extendedUsers.json';
-
-    fs.readFile(extendedUsersPath, 'utf8', (err, data) => {
-        if (err) return res.status(500).send('Server error');
-
-        let extendedUsers = JSON.parse(data);
-        let user = extendedUsers.find(u => u.userid === userId);
-
-        if (user) {
-            user.role = 'group-admin';
-            fs.writeFile(extendedUsersPath, JSON.stringify(extendedUsers, null, 2), 'utf8', (err) => {
-                if (err) return res.status(500).send('Server error');
-                
-                fs.readFile(usersPath, 'utf8', (err, data) => {
-                    if (err) return res.status(500).send('Server error');
-
-                    let users = JSON.parse(data);
-                    let matchingUser = users.find(u => u.username === user.username);
-
-                    if (matchingUser) {
-                        matchingUser.role = 'group-admin';
-                        fs.writeFile(usersPath, JSON.stringify(users, null, 2), 'utf8', (err) => {
-                            if (err) return res.status(500).send('Server error');
-                            res.send({ success: true, message: `${user.username} promoted to Group Admin` });
-                        });
-                    } else {
-                        res.status(404).send('Matching user not found in users.json');
-                    }
-                });
-            });
-        } else {
-            res.status(404).send('User not found in extendedUsers.json');
-        }
-    });
-});
-
-// Promote a user to Super Admin
-app.post('/promoteToSuperAdmin', (req, res) => {
-    const userId = req.body.userId;
-    const usersPath = './data/users.json';
-    const extendedUsersPath = './data/extendedUsers.json';
-
-    fs.readFile(extendedUsersPath, 'utf8', (err, data) => {
-        if (err) return res.status(500).send('Server error');
-
-        let extendedUsers = JSON.parse(data);
-        let user = extendedUsers.find(u => u.userid === userId);
-
-        if (user) {
-            user.role = 'super-admin';
-            fs.writeFile(extendedUsersPath, JSON.stringify(extendedUsers, null, 2), 'utf8', (err) => {
-                if (err) return res.status(500).send('Server error');
-                
-                fs.readFile(usersPath, 'utf8', (err, data) => {
-                    if (err) return res.status(500).send('Server error');
-
-                    let users = JSON.parse(data);
-                    let matchingUser = users.find(u => u.username === user.username);
-
-                    if (matchingUser) {
-                        matchingUser.role = 'super-admin';
-                        fs.writeFile(usersPath, JSON.stringify(users, null, 2), 'utf8', (err) => {
-                            if (err) return res.status(500).send('Server error');
-                            res.send({ success: true, message: `${user.username} promoted to Super Admin` });
-                        });
-                    } else {
-                        res.status(404).send('Matching user not found in users.json');
-                    }
-                });
-            });
-        } else {
-            res.status(404).send('User not found in extendedUsers.json');
-        }
-    });
-});
-
-app.post('/removeUser', (req, res) => {
-    const userId = req.body.userId;
-    console.log(`Received request to remove user with ID: ${userId}`);
-
-    const usersPath = './data/users.json';
-    const extendedUsersPath = './data/extendedUsers.json';
-
-    fs.readFile(extendedUsersPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading extendedUsers.json:', err);
-            return res.status(500).json({ success: false, message: 'Server error reading extendedUsers.json' });
-        }
-
-        let extendedUsers = JSON.parse(data);
-        let userIndex = extendedUsers.findIndex(u => u.userid === userId);
-
-        if (userIndex !== -1) {
-            let [removedUser] = extendedUsers.splice(userIndex, 1);
-            console.log(`User found: ${removedUser.username}. Removing...`);
-
-            fs.writeFile(extendedUsersPath, JSON.stringify(extendedUsers, null, 2), 'utf8', (err) => {
-                if (err) {
-                    console.error('Error writing extendedUsers.json:', err);
-                    return res.status(500).json({ success: false, message: 'Server error writing extendedUsers.json' });
-                }
-
-                fs.readFile(usersPath, 'utf8', (err, data) => {
-                    if (err) {
-                        console.error('Error reading users.json:', err);
-                        return res.status(500).json({ success: false, message: 'Server error reading users.json' });
-                    }
-
-                    let users = JSON.parse(data);
-                    users = users.filter(u => u.username !== removedUser.username);
-
-                    fs.writeFile(usersPath, JSON.stringify(users, null, 2), 'utf8', (err) => {
-                        if (err) {
-                            console.error('Error writing users.json:', err);
-                            return res.status(500).json({ success: false, message: 'Server error writing users.json' });
-                        }
-                        console.log(`User ${removedUser.username} removed successfully`);
-                        return res.json({ success: true, message: `User ${removedUser.username} removed successfully` });
-                    });
-                });
-            });
-        } else {
-            console.error(`User ID ${userId} not found in extendedUsers.json`);
-            return res.status(404).json({ success: false, message: 'User not found in extendedUsers.json' });
-        }
-    });
-});
-
-app.get('/server/data/channels/:groupId', (req, res) => {
-    const groupId = req.params.groupId;
-    const channelsPath = './data/channel.json'; // Ensure this path is correct
-
-    fs.readFile(channelsPath, 'utf8', (err, data) => {
-        if (err) return res.status(500).send('Server error');
-
-        let channels = JSON.parse(data);
-        let groupChannels = channels.filter(channel => channel.groupId === parseInt(groupId));
-
-        res.json(groupChannels);
-    });
-});
 
 
 // Start the server

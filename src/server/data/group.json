@@ -21,7 +21,7 @@
     "id": 2,
     "name": "Group B",
     "description": "This is Group B",
-    "createdBy": "group-admin",
+    "createdBy": "groupadmin",
     "channels": [
       {
         "id": 201,
@@ -32,6 +32,18 @@
         "id": 202,
         "name": "Channel B2",
         "description": "This is Channel B2 of Group B"
+      },
+      {
+        "id": 1725467321520,
+        "name": "Channel3",
+        "description": "123456",
+        "createdBy": "groupadmin"
+      },
+      {
+        "id": 1725468521733,
+        "name": "Channel1",
+        "description": "123456",
+        "createdBy": "groupadmin"
       }
     ]
   },
@@ -40,6 +52,19 @@
     "description": "123",
     "createdBy": "groupadmin",
     "id": 3,
-    "channels": []
+    "channels": [
+      {
+        "id": 1725467291027,
+        "name": "Channel1",
+        "description": "123456",
+        "createdBy": "groupadmin"
+      },
+      {
+        "id": 1725467520869,
+        "name": "Channel4",
+        "description": "123456",
+        "createdBy": "groupadmin"
+      }
+    ]
   }
 ]

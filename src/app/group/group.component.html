@@ -4,25 +4,32 @@
     <li *ngFor="let group of groups" (click)="selectGroup(group.id)">
       {{ group.name }}
       <button (click)="joinGroup(group.id)">Join Group</button>
+      <button *ngIf="group.createdBy === username" (click)="deleteGroup()">Delete Group</button>
     </li>
   </ul>
 
   <h3 *ngIf="channels.length">Channels in Selected Group</h3>
   <ul>
-    <li *ngFor="let channel of channels" (click)="joinChannel(channel.channelId)">
-      {{ channel.name }} (Join)
-      <h3>Create New Channel</h3>
-<div>
+    <li *ngFor="let channel of channels">
+      {{ channel.name }} 
+      <button (click)="joinChannel(channel.channelId)">Join</button>
+      <button *ngIf="selectedGroup.createdBy === username" (click)="deleteChannel(channel.channelId)">Delete Channel</button>
+    </li>
+  </ul>
+</div>
+
+<!-- Show the Create New Channel form only if the user has joined the selected group -->
+<div *ngIf="joinedGroups.includes(selectedGroup?.id)">
+  <h3>Create New Channel</h3>
+  <div>
     <label for="channelName">Channel Name:</label>
     <input type="text" id="channelName" [(ngModel)]="newChannelName" name="channelName" required>
     <label for="channelDescription">Description:</label>
     <input type="text" id="channelDescription" [(ngModel)]="newChannelDescription" name="channelDescription">
     <button (click)="createChannel()">Create Channel</button>
+  </div>
 </div>
 
-    </li>
-  </ul>
-</div>
 <div>
   <h3>Create New Group</h3>
   <form (ngSubmit)="createGroup()">
