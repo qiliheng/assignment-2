@@ -1,0 +1,14 @@
+[
+    {
+        "groupId": 1,
+        "groupName": "Group 1",
+        "createdBy": "admin",  
+        "channels": [
+            {
+                "channelId": 1,
+                "channelName": "Channel 1",
+                "createdBy": "admin"  
+            }
+        ]
+    }
+]

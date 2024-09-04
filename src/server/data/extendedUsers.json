@@ -1,1 +1,20 @@
-[{"userid":100,"username":"email1@com.au","userbirthdate":"2004-01-14","userage":30},{"userId":20000,"username":"email2@com.au","userbirthdate":"2004-01-14","userage":20000},{"userId":3,"username":"email@com.au","userbirthdate":"2004-01-14","userage":30000}]
+[
+  {
+    "userid": 1,
+    "username": "admin",
+    "userbirthdate": "2004-01-14",
+    "userage": 300
+  },
+  {
+    "userid": 2,
+    "username": "user",
+    "userbirthdate": "2004-01-14",
+    "userage": 30000
+  },
+  {
+    "userid": 3,
+    "username": "super",
+    "userbirthdate": "2004-01-14",
+    "userage": 30000
+  }
+]

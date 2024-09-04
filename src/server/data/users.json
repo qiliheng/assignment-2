@@ -1,12 +1,17 @@
-[{
-    "username":"email1@com.au",
-    "pwd":"123"
-}, {
-    "username":"email2@com.au",
-    "pwd":"123"
-},
-{
-    "username":"email@com.au",
-    "pwd":"123"
-}
+[
+  {
+    "username": "super",
+    "pwd": "123",
+    "role": "super-admin"
+  },
+  {
+    "username": "admin",
+    "pwd": "123",
+    "role": "group-admin"
+  },
+  {
+    "username": "user",
+    "pwd": "user123",
+    "role": "chat-user"
+  }
 ]

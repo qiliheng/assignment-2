@@ -1,0 +1,18 @@
+[
+    {
+      "channelId": "channel1",
+      "channelName": "General",
+      "groupId": "group1"
+    },
+    {
+      "channelId": "channel2",
+      "channelName": "Random",
+      "groupId": "group1"
+    },
+    {
+      "channelId": "channel3",
+      "channelName": "General",
+      "groupId": "group2"
+    }
+  ]
+  
