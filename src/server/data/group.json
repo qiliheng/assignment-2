@@ -1,19 +1,39 @@
-[
-    {
-      "groupId": 1,
-      "groupName": "Group A",
-      "channels": [
-        { "channelId": 1, "channelName": "Channel 1" },
-        { "channelId": 2, "channelName": "Channel 2" }
-      ]
-    },
-    {
-      "groupId": 2,
-      "groupName": "Group B",
-      "channels": [
-        { "channelId": 3, "channelName": "Channel 3" },
-        { "channelId": 4, "channelName": "Channel 4" }
-      ]
-    }
-  ]
+{
+    "groups": [
+      {
+        "id": 1,
+        "name": "Group A",
+        "description": "This is Group A",
+        "channels": [
+          {
+            "id": 101,
+            "name": "Channel A1",
+            "description": "This is Channel A1 of Group A"
+          },
+          {
+            "id": 102,
+            "name": "Channel A2",
+            "description": "This is Channel A2 of Group A"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Group B",
+        "description": "This is Group B",
+        "channels": [
+          {
+            "id": 201,
+            "name": "Channel B1",
+            "description": "This is Channel B1 of Group B"
+          },
+          {
+            "id": 202,
+            "name": "Channel B2",
+            "description": "This is Channel B2 of Group B"
+          }
+        ]
+      }
+    ]
+  }
   

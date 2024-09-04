@@ -32,7 +32,7 @@ export class GroupComponent implements OnInit {
     console.log('Group selected:', groupId);
     this.selectedGroup = this.groups.find(group => group.id === groupId);
 
-    this.httpClient.get(`http://s5294121.elf.ict.griffith.edu.au:8888/server/data/channel/${groupId}`)
+    this.httpClient.get(`http://s5294121.elf.ict.griffith.edu.au:8888/server/data/group/${groupId}`)
       .subscribe(
         (data: any) => {
           this.channels = data.channels;
