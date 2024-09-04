@@ -24,11 +24,7 @@ app.post('/joinChannel', require('./router/postJoinChannel'));
 // Require your postJoinGroup file
 // Add the route for joining a group
 app.post('/joinGroup', postJoinGroup);
-app.post('/createUser', (req, res) => {
-    // Your user creation logic here
-    res.json({ ok: true });
-  });
-
+app.post('/createUser',postCreateUser);
 
 
 
