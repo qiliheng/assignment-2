@@ -24,7 +24,7 @@ app.post('/joinChannel', require('./router/postJoinChannel'));
 // Require your postJoinGroup file
 // Add the route for joining a group
 app.post('/joinGroup', postJoinGroup);
-app.post('/createUser',postCreateUser);
+app.post('/createUser',require('./router/postCreateUser'));
 
 
 

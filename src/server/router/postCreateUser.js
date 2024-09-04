@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { json } = require('stream/consumers');
 
 module.exports = function(req, res) {
     const newUser = {
@@ -11,11 +12,11 @@ module.exports = function(req, res) {
         groups: [] // Initialize an empty array for groups
     };
 
-    const usersPath = path.join(__dirname, 'data', 'users.json');
+    const usersPath = path.join(__dirname, '../data', 'users.json');
 
     fs.readFile(usersPath, 'utf8', (err, data) => {
         if (err) {
-            return res.status(500).send('Server error reading users.json');
+            return res.status(500).send('Server error reading users.json' + JSON.stringify(err));
         }
 
         let users = JSON.parse(data);

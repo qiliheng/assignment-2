@@ -80,11 +80,13 @@
     "groups": []
   },
   {
-    "username": "",
-    "email": "",
-    "password": "",
+    "username": "12345@email.com",
+    "email": "qiliheng040114@gmail.com",
+    "password": "123",
     "roles": [
       "chat-user"
-    ]
+    ],
+    "id": 1725459641787,
+    "groups": []
   }
 ]
