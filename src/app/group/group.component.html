@@ -11,6 +11,27 @@
   <ul>
     <li *ngFor="let channel of channels" (click)="joinChannel(channel.channelId)">
       {{ channel.name }} (Join)
+      <h3>Create New Channel</h3>
+<div>
+    <label for="channelName">Channel Name:</label>
+    <input type="text" id="channelName" [(ngModel)]="newChannelName" name="channelName" required>
+    <label for="channelDescription">Description:</label>
+    <input type="text" id="channelDescription" [(ngModel)]="newChannelDescription" name="channelDescription">
+    <button (click)="createChannel()">Create Channel</button>
+</div>
+
     </li>
   </ul>
+</div>
+<div>
+  <h3>Create New Group</h3>
+  <form (ngSubmit)="createGroup()">
+    <label for="groupName">Group Name:</label>
+    <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" required>
+    
+    <label for="groupDescription">Description:</label>
+    <input type="text" id="groupDescription" [(ngModel)]="newGroupDescription" name="groupDescription">
+    
+    <button type="submit">Create Group</button>
+  </form>
 </div>

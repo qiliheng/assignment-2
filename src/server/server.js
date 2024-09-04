@@ -20,6 +20,8 @@ app.use('/server/data', express.static(path.join(__dirname, 'data')));
 // Login routes
 app.post('/login', require('./router/postLogin'));
 app.post('/joinChannel', require('./router/postJoinChannel')); 
+app.post('/CreateGroup', require('./router/postCreateGroup'));
+app.post('/CreateChanne;', require('./router/postCreateChannel'));
 // Require your postJoinGroup file
 // Add the route for joining a group
 app.post('/joinGroup', postJoinGroup);
