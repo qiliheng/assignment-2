@@ -7,41 +7,40 @@ const httpOptions = {
 };
 
 @Component({
-  selector: 'app-create-user',
-  standalone: true,
-  imports: [FormsModule],
+  selector: 'app-user',
+  standalone: true, // Ensure this component is marked as standalone
+  imports: [FormsModule], // Import FormsModule here
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 export class UserComponent {
   username = '';
+  email = '';
   password = '';
-  birthdate = '';
-  age = 0;
 
   constructor(private httpClient: HttpClient) {}
 
   createUser() {
     const newUser = {
       username: this.username,
-      pwd: this.password,
-      role: 'chat-user',
+      email: this.email,
+      password: this.password,
+      roles: ["chat-user"] // Default role
     };
 
     this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/createUser', newUser, httpOptions)
       .subscribe(
         (data: any) => {
           alert(JSON.stringify(data));
-          if (data.ok) {
+          if (data.success) {
             console.log('User created successfully:', data);
           } else {
-            console.error('Error:', data.error);
+            console.error('Error:', data.message);
           }
         },
         (error: any) => {
-          console.error('Error creating user', error);
+          console.error('Error creating user:', error);
         }
       );
   }
 }
-
