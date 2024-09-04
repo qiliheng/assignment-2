@@ -4,7 +4,9 @@
     "username": "superadmin",
     "email": "superadmin@example.com",
     "pwd": "123",
-    "roles": ["super-admin"],
+    "roles": [
+      "super-admin"
+    ],
     "groups": []
   },
   {
@@ -12,7 +14,9 @@
     "username": "groupadmin",
     "email": "groupadmin@example.com",
     "pwd": "123",
-    "roles": ["group-admin"],
+    "roles": [
+      "group-admin"
+    ],
     "groups": []
   },
   {
@@ -20,7 +24,9 @@
     "username": "user1",
     "email": "user1@example.com",
     "pwd": "user123",
-    "roles": ["chat-user"],
+    "roles": [
+      "chat-user"
+    ],
     "groups": []
   },
   {
@@ -28,7 +34,9 @@
     "username": "user2",
     "email": "user2@example.com",
     "pwd": "user123",
-    "roles": ["chat-user"],
+    "roles": [
+      "chat-user"
+    ],
     "groups": []
   },
   {
@@ -36,7 +44,9 @@
     "username": "user3",
     "email": "user3@example.com",
     "pwd": "user123",
-    "roles": ["chat-user"],
+    "roles": [
+      "chat-user"
+    ],
     "groups": []
   },
   {
@@ -44,7 +54,9 @@
     "username": "user4",
     "email": "user4@example.com",
     "pwd": "user123",
-    "roles": ["chat-user"],
+    "roles": [
+      "chat-user"
+    ],
     "groups": []
   },
   {
@@ -52,7 +64,9 @@
     "username": "user5",
     "email": "user5@example.com",
     "pwd": "user123",
-    "roles": ["chat-user"],
+    "roles": [
+      "chat-user"
+    ],
     "groups": []
   },
   {
@@ -60,7 +74,17 @@
     "username": "user6",
     "email": "user6@example.com",
     "pwd": "user123",
-    "roles": ["chat-user"],
+    "roles": [
+      "chat-user"
+    ],
     "groups": []
+  },
+  {
+    "username": "",
+    "email": "",
+    "password": "",
+    "roles": [
+      "chat-user"
+    ]
   }
 ]
