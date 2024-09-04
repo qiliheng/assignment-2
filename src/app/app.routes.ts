@@ -13,6 +13,6 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'super-admin', component: SuperAdminComponent },
   { path: 'groups', component: GroupComponent },
- // { path: 'channels', component: ChannelComponent },
+  { path: 'channels', component: ChannelComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
