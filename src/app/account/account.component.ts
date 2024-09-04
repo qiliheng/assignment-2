@@ -22,6 +22,8 @@ export class AccountComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  
+
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.username = sessionStorage.getItem('username') || '';
@@ -30,4 +32,30 @@ export class AccountComponent implements OnInit {
       this.userid = Number(sessionStorage.getItem('userid') || 0);
     }
   }
+
+  deleteAccount() {
+    const username = sessionStorage.getItem('username');
+
+    if (username) {
+      const deleteUser = { username: username };
+
+      this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/deleteUser', deleteUser)
+        .subscribe(
+          (response: any) => {
+            console.log('User deleted successfully:', response);
+            alert('Your account has been deleted.');
+            sessionStorage.clear();
+            window.location.href = '/login';
+          },
+          (error: any) => {
+            console.error('Error deleting user:', error);
+            alert('There was a problem deleting your account.');
+          }
+        );
+    } else {
+      console.error('No user is logged in.');
+      alert('No user is logged in.');
+    }
+  }
 }
+

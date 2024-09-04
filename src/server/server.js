@@ -25,6 +25,28 @@ app.post('/joinChannel', require('./router/postJoinChannel'));
 app.post('/joinGroup', postJoinGroup);
 app.post('/createUser',require('./router/postCreateUser'));
 
+app.post('/deleteUser', (req, res) => {
+    const { username } = req.body;
+
+    const usersPath = path.join(__dirname, 'data', 'users.json');
+    
+    fs.readFile(usersPath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Server error reading users.json');
+        }
+
+        let users = JSON.parse(data);
+        const updatedUsers = users.filter(user => user.username !== username);
+
+        fs.writeFile(usersPath, JSON.stringify(updatedUsers, null, 2), 'utf8', (err) => {
+            if (err) {
+                return res.status(500).send('Server error writing users.json');
+            }
+            res.send({ success: true, message: `User ${username} deleted successfully` });
+        });
+    });
+});
+
 
 
 // Promote a user to Group Admin

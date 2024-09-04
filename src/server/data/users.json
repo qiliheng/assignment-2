@@ -88,25 +88,5 @@
     ],
     "id": 1725459641787,
     "groups": []
-  },
-  {
-    "username": "t2",
-    "email": "qiliheng040114@gmail.com",
-    "pwd": "123",
-    "roles": [
-      "chat-user"
-    ],
-    "id": 1725463316126,
-    "groups": []
-  },
-  {
-    "username": "t3",
-    "email": "qiliheng040114@gmail.com",
-    "pwd": "pwd",
-    "roles": [
-      "chat-user"
-    ],
-    "id": 1725463394383,
-    "groups": []
   }
 ]
