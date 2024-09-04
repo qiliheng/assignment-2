@@ -5,17 +5,17 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-super-admin',
   standalone: true,
-  imports: [FormsModule], // Import FormsModule here
+  imports: [FormsModule], 
   templateUrl: './super-admin.component.html',
   styleUrls: ['./super-admin.component.css']
 })
 export class SuperAdminComponent {
-  userId!: number;
+  username: string = '';  
 
   constructor(private userService: UserService) {}
 
   promoteToGroupAdmin() {
-    this.userService.promoteToGroupAdmin(this.userId).subscribe(response => {
+    this.userService.promoteToGroupAdmin(this.username).subscribe(response => {
       console.log(response.message);
       alert(response.message);
     }, error => {
@@ -25,7 +25,7 @@ export class SuperAdminComponent {
   }
 
   promoteToSuperAdmin() {
-    this.userService.promoteToSuperAdmin(this.userId).subscribe(response => {
+    this.userService.promoteToSuperAdmin(this.username).subscribe(response => {
       console.log(response.message);
       alert(response.message);
     }, error => {
@@ -35,7 +35,7 @@ export class SuperAdminComponent {
   }
 
   removeUser() {
-    this.userService.removeUser(this.userId).subscribe(response => {
+    this.userService.removeUser(this.username).subscribe(response => {
       console.log(response.message);
       alert(response.message);
     }, error => {

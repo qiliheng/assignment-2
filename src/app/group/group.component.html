@@ -18,8 +18,8 @@
   </ul>
 </div>
 
-<!-- Show the Create New Channel form only if the user has joined the selected group -->
-<div *ngIf="joinedGroups.includes(selectedGroup?.id)">
+
+<div *ngIf="selectedGroup?.createdBy === username">
   <h3>Create New Channel</h3>
   <div>
     <label for="channelName">Channel Name:</label>
@@ -30,7 +30,9 @@
   </div>
 </div>
 
-<div>
+
+
+<div *ngIf="!userRole.includes('chat-user')">
   <h3>Create New Group</h3>
   <form (ngSubmit)="createGroup()">
     <label for="groupName">Group Name:</label>

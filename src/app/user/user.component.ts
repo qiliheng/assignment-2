@@ -8,8 +8,8 @@ const httpOptions = {
 
 @Component({
   selector: 'app-user',
-  standalone: true, // Ensure this component is marked as standalone
-  imports: [FormsModule], // Import FormsModule here
+  standalone: true, 
+  imports: [FormsModule], 
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
@@ -25,7 +25,7 @@ export class UserComponent {
       username: this.username,
       email: this.email,
       pwd: this.password,
-      roles: ["chat-user"] // Default role
+      roles: ["chat-user"] 
     };
 
     this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/createUser', newUser, httpOptions)

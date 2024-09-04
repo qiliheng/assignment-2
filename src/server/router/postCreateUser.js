@@ -20,8 +20,7 @@ module.exports = function(req, res) {
         }
 
         let users = JSON.parse(data);
-
-        // Check for unique username
+        
         if (users.some(user => user.username === newUser.username)) {
             return res.status(400).send('Username already exists');
         }

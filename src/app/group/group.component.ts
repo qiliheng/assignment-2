@@ -24,12 +24,14 @@ export class GroupComponent implements OnInit {
   newChannelDescription: string = '';
 
   username: string = '';
+  userRole: string[] = []; 
 
   constructor(private httpClient: HttpClient, @Inject(PLATFORM_ID) private platformId: object) {}
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.username = sessionStorage.getItem('username') || '';
+      this.userRole = JSON.parse(sessionStorage.getItem('roles') || '[]');  // Parse as array
     }
 
     this.httpClient.get('http://s5294121.elf.ict.griffith.edu.au:8888/server/data/group.json')
@@ -162,8 +164,8 @@ export class GroupComponent implements OnInit {
   }
 
   deleteChannel(channelId: number) {
-    const username = sessionStorage.getItem('username'); // Get the logged-in username
-    const groupId = this.selectedGroup.id; // Assume selectedGroup is already set
+    const username = sessionStorage.getItem('username'); 
+    const groupId = this.selectedGroup.id; 
 
     const deleteData = {
         channelId: channelId,
@@ -175,7 +177,6 @@ export class GroupComponent implements OnInit {
       .subscribe(
         (response: any) => {
           console.log('Channel deleted successfully:', response);
-          // Explicitly define the type of 'c' as 'any'
           this.selectedGroup.channels = this.selectedGroup.channels.filter((c: any) => c.id !== channelId);
           alert('Channel deleted successfully!');
         },

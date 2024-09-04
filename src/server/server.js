@@ -8,7 +8,6 @@ const path = require('path'); // <-- Add this line
 
 app.use(cors());
 const http = require('http').Server(app);
-const postJoinGroup = require('./router/postJoinGroup');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -27,9 +26,7 @@ app.post('/deleteChannel', require('./router/postDleteChannel'));
 app.post('/promoteToGroupAdmin', require('./router/postPromoteToGroupAdmin'));
 app.post('/promoteToSuperAdmin', require('./router/postPromoteToSuperAdmin'));
 app.post('/removeUser', require('./router/postRemoveUser'));
-// Require your postJoinGroup file
-// Add the route for joining a group
-app.post('/joinGroup', postJoinGroup);
+app.post('/joinGroup', require('./router/postJoinGroup'));
 app.post('/createUser',require('./router/postCreateUser'));
 
 app.post('/deleteUser', (req, res) => {

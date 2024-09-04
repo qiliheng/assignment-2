@@ -3,9 +3,9 @@ const path = require('path');
 
 module.exports = function (req, res) {
     const { channelId, groupId, username } = req.body;
-    const filePath = path.join(__dirname, '../data/group.json');  // Ensure correct path
+    const filePath = path.join(__dirname, '..data', 'group.json');  
 
-    // Read the group data from group.json
+
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading group.json:', err);
@@ -21,7 +21,7 @@ module.exports = function (req, res) {
             if (channelIndex !== -1) {
                 group.channels.splice(channelIndex, 1);
 
-                // Write the updated group data back to group.json
+
                 fs.writeFile(filePath, JSON.stringify(groups, null, 2), 'utf8', (err) => {
                     if (err) {
                         console.error('Error writing to group.json:', err);

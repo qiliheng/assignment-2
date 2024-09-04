@@ -14,13 +14,12 @@ module.exports = function(req, res) {
 
         let groups = JSON.parse(data);
 
-        // Find the group by ID
         const groupIndex = groups.findIndex(group => group.id === groupId);
         const group = groups[groupIndex];
 
         if (group) {
             if (group.createdBy === username) {
-                // Remove the group
+
                 groups.splice(groupIndex, 1);
 
                 fs.writeFile(groupPath, JSON.stringify(groups, null, 2), 'utf8', (err) => {

@@ -1,14 +1,12 @@
 var fs = require('fs');
 
 module.exports = function(req, res) {
-    var u = req.body.username || req.body.email;  // Accept either username or email
+    var u = req.body.username || req.body.email;  
     var p = req.body.pwd;
     
     fs.readFile('./data/users.json', 'utf8', function(err, data) {
         if (err) throw err;
         let userArray = JSON.parse(data);
-
-        // Find user by either username or email
         let i = userArray.findIndex(user => 
             (user.username === u || user.email === u) && user.pwd === p);
         

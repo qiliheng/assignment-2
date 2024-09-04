@@ -1,0 +1,86 @@
+h3 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+ul {
+    padding-left: 0;
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+ul > li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ul > li > button {
+    margin-left: 10px;
+    background-color: #61dafb;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+ul > li > button:hover {
+    background-color: #21a1f1;
+}
+
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form > button {
+    margin-top: 10px;
+}
+

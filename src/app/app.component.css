@@ -1,0 +1,80 @@
+.navbar {
+    background-color: #282c34;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.navbar-nav > li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.navbar-nav > li > a, .navbar-nav > li > button {
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > button:hover {
+    background-color: #61dafb;
+    color: #282c34;
+}
+
+.navbar-text {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 10px 15px;
+}
+
+.container {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+router-outlet {
+    display: block;
+    margin-top: 20px;
+}
+
+h3 {
+    color: #282c34;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+ul {
+    padding-left: 20px;
+    list-style: none;
+}
+
+ul > li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+ul > li > button {
+    margin-left: 10px;
+    background-color: #61dafb;
+    color: #282c34;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+ul > li > button:hover {
+    background-color: #21a1f1;
+}

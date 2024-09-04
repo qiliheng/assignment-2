@@ -1,25 +1,44 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink, Router } from '@angular/router';
-
-import { LoginComponent } from './login/login.component';
-import { AccountComponent } from './account/account.component';
-import { ProfileComponent } from './profile/profile.component';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, AccountComponent, RouterLink, ProfileComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,  // <-- Make sure RouterOutlet is imported
+    RouterLink     // <-- Import RouterLink to use in the template
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'week4tut';
-  
+export class AppComponent implements OnInit {
+  title = 'assignment1';
 
-  constructor(private router: Router) {}
+  isLoggedIn: boolean = false;
+  username: string | null = '';
+  userRole: string | null = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.authService.isLoggedIn.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+      if (this.isLoggedIn) {
+        this.username = sessionStorage.getItem('username');
+        const rolesString = sessionStorage.getItem('roles');
+        if (rolesString) {
+          const roles = JSON.parse(rolesString);  // Parse roles as array
+          this.userRole = roles.includes('super-admin') ? 'super-admin' : null;
+        }
+      }
+    });
+  }
 
   logout() {
-    sessionStorage.clear();  // Clear session storage
-    this.router.navigateByUrl('/login');  // Redirect to login page
+    this.authService.logout();
+    this.router.navigateByUrl('/login'); 
   }
 }

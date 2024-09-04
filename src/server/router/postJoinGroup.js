@@ -18,12 +18,10 @@ module.exports = function(req, res) {
         if (userIndex !== -1) {
             let user = users[userIndex];
 
-            // Ensure groups array exists
             if (!user.groups) {
                 user.groups = [];
             }
 
-            // Add the group to the user's joined groups if not already added
             if (!user.groups.includes(groupId)) {
                 user.groups.push(groupId);
             } else {

@@ -11,15 +11,16 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  promoteToGroupAdmin(userId: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/promoteToGroupAdmin`, { userId });
-  }
+promoteToGroupAdmin(username: string) {
+  return this.http.post<any>(`${this.baseUrl}/promoteToGroupAdmin`, { username });
+}
 
-  promoteToSuperAdmin(userId: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/promoteToSuperAdmin`, { userId });
-  }
+promoteToSuperAdmin(username: string) {
+  return this.http.post<any>(`${this.baseUrl}/promoteToSuperAdmin`, { username });
+}
 
-  removeUser(userId: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/removeUser`, { userId });
-  }
+removeUser(username: string) {
+  return this.http.post<any>(`${this.baseUrl}/removeUser`, { username });
+}
+
 }

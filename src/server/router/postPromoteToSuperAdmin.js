@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = function (req, res) {
     const { username } = req.body;
-    const usersPath = path.join(__dirname, 'data', 'users.json');
+    const usersPath = path.join(__dirname, '../data', 'users.json');
 
     fs.readFile(usersPath, 'utf8', (err, data) => {
         if (err) {
