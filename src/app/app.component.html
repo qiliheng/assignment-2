@@ -14,7 +14,6 @@
       <li *ngIf="isLoggedIn"><a class="nav-link" routerLink="/account">Account</a></li>
       <li *ngIf="isLoggedIn"><a class="nav-link" routerLink="/profile">Profile</a></li>
       <li *ngIf="isLoggedIn"><a class="nav-link" routerLink="/groups">Groups</a></li>
-      <!-- Only show the Superadmin link if the user's role is 'super-admin' -->
       <li *ngIf="isLoggedIn && userRole === 'super-admin'"><a class="nav-link" routerLink="/super-admin">Superadmin</a></li>
       <li *ngIf="isLoggedIn"><button (click)="logout()">Logout</button></li>
     </ul>
