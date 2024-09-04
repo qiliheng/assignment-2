@@ -3,13 +3,14 @@
   <ul>
     <li *ngFor="let group of groups" (click)="selectGroup(group.id)">
       {{ group.name }}
+      <button (click)="joinGroup(group.id)">Join Group</button>
     </li>
   </ul>
 
   <h3 *ngIf="channels.length">Channels in Selected Group</h3>
   <ul>
-    <li *ngFor="let channel of channels">
-      {{ channel.name }}
+    <li *ngFor="let channel of channels" (click)="joinChannel(channel.channelId)">
+      {{ channel.name }} (Join)
     </li>
   </ul>
 </div>

@@ -8,6 +8,7 @@ const path = require('path'); // <-- Add this line
 
 app.use(cors());
 const http = require('http').Server(app);
+const postJoinGroup = require('./router/postJoinGroup');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,6 +20,10 @@ app.use('/server/data', express.static(path.join(__dirname, 'data')));
 // Login routes
 app.post('/login', require('./router/postLogin'));
 app.post('/loginafter', require('./router/postLoginAfter'));
+app.post('/joinChannel', require('./router/postJoinChannel')); 
+// Require your postJoinGroup file
+// Add the route for joining a group
+app.post('/joinGroup', postJoinGroup);
 app.post('/createUser', (req, res) => {
     // Your user creation logic here
     res.json({ ok: true });

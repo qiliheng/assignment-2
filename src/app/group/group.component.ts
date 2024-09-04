@@ -5,7 +5,7 @@ import { NgIf, NgFor, CommonModule } from '@angular/common';
 @Component({
   selector: 'app-group',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor],  // Ensure CommonModule, NgIf, and NgFor are imported
+  imports: [CommonModule, NgIf, NgFor],
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.css']
 })
@@ -13,6 +13,7 @@ export class GroupComponent implements OnInit {
   groups: any[] = [];
   channels: any[] = [];
   selectedGroup: any = null;
+  joinedGroups: any[] = []; // Array to keep track of joined groups
 
   constructor(private httpClient: HttpClient) {}
 
@@ -32,7 +33,46 @@ export class GroupComponent implements OnInit {
     console.log('Group selected:', groupId);
     this.selectedGroup = this.groups.find(group => group.id === groupId);
 
-          this.channels = this.selectedGroup.channels;
-}
+    if (this.joinedGroups.includes(groupId)) {
+      this.channels = this.selectedGroup.channels;
+    } else {
+      this.channels = []; // Clear channels if the group is not joined
+      console.log('You need to join the group first before accessing its channels.');
+    }
+  }
 
+  joinGroup(groupId: number) {
+    console.log('Joining group:', groupId);
+  
+    if (!this.joinedGroups.includes(groupId)) {
+      this.joinedGroups.push(groupId);
+      console.log(`Group ${groupId} joined successfully.`);
+      alert(`You have successfully joined the group: ${this.selectedGroup.name}`);  // Show success alert
+  
+      if (this.selectedGroup && this.selectedGroup.id === groupId) {
+        this.channels = this.selectedGroup.channels;
+      }
+    } else {
+      console.log(`Already joined group ${groupId}.`);
+      alert(`You have already joined the group: ${this.selectedGroup.name}`);
+    }
+  }
+  
+
+  joinChannel(channelId: number) {
+    console.log('Joining channel:', channelId);
+
+    if (this.joinedGroups.includes(this.selectedGroup.id)) {
+      const channel = this.channels.find(c => c.channelId === channelId);
+
+      if (channel) {
+        const userId = sessionStorage.getItem('userid'); // Assuming user ID is stored in session
+        console.log(`User ${userId} is joining channel ${channel.channelName} in group ${this.selectedGroup.name}`);
+      } else {
+        console.error('Channel not found');
+      }
+    } else {
+      console.error('You need to join the group before joining a channel.');
+    }
+  }
 }
