@@ -13,5 +13,25 @@
     "username": "user",
     "pwd": "user123",
     "role": "chat-user"
-  }
+  },
+  {
+    "username": "user2",
+    "pwd": "user123",
+    "role": "chat-user"
+  },
+  {
+    "username": "user3",
+    "pwd": "user123",
+    "role": "chat-user"
+  },
+  {
+    "username": "user4",
+    "pwd": "user123",
+    "role": "chat-user"
+  },
+  {
+    "username": "user5",
+    "pwd": "user123",
+    "role": "chat-user"
+  },
 ]

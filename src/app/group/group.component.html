@@ -1,15 +1,15 @@
 <div>
   <h3>Groups</h3>
   <ul>
-    <li *ngFor="let group of groups" (click)="selectGroup(group.groupId)">
-      {{ group.groupName }}
+    <li *ngFor="let group of groups" (click)="selectGroup(group.id)">
+      {{ group.name }}
     </li>
   </ul>
 
   <h3 *ngIf="channels.length">Channels in Selected Group</h3>
   <ul>
     <li *ngFor="let channel of channels">
-      {{ channel.channelName }}
+      {{ channel.name }}
     </li>
   </ul>
 </div>
