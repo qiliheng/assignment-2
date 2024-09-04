@@ -24,7 +24,7 @@ export class UserComponent {
     const newUser = {
       username: this.username,
       email: this.email,
-      password: this.password,
+      pwd: this.password,
       roles: ["chat-user"] // Default role
     };
 
@@ -40,6 +40,7 @@ export class UserComponent {
         },
         (error: any) => {
           console.error('Error creating user:', error);
+          alert("username already be there")
         }
       );
   }

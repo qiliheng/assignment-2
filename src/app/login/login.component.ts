@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const httpOptions = {
@@ -24,45 +23,45 @@ export class LoginComponent {
   constructor(private router: Router, private httpClient: HttpClient) {}
 
   submit() {
-    let user = { username: this.email, pwd: this.password };
-
+    let user = { email: this.email, pwd: this.password };
+  
     this.httpClient.post(BACKEND_URL + '/login', user, httpOptions)
       .subscribe((data: any) => {
-        alert("posting: " + JSON.stringify(user));
-        alert("postRes: " + JSON.stringify(data));
-
+        alert("Posting: " + JSON.stringify(user));
+        alert("Post response: " + JSON.stringify(data));
+  
         if (data.ok) {
-          alert("correct");
-
-          if (data.userid !== undefined) {
-            sessionStorage.setItem('userid', data.userid.toString());
+          alert("Login successful");
+  
+          if (data.id !== undefined) {
+            sessionStorage.setItem('userid', data.id.toString());
           } else {
-            console.error('userid is undefined');
+            console.error('User ID is undefined');
           }
-
+  
           sessionStorage.setItem('userlogin', data.ok.toString());
-
+  
           if (data.username !== undefined) {
             sessionStorage.setItem('username', data.username);
           } else {
-            console.error('username is undefined');
+            console.error('Username is undefined');
           }
-
-          if (data.userbirthdate !== undefined) {
-            sessionStorage.setItem('userbirthdate', data.userbirthdate);
+  
+          if (data.email !== undefined) {
+            sessionStorage.setItem('email', data.email);
           } else {
-            console.error('userbirthdate is undefined');
+            console.error('Email is undefined');
           }
-
-          if (data.userage !== undefined) {
-            sessionStorage.setItem('userage', data.userage.toString());
+  
+          if (data.roles !== undefined) {
+            sessionStorage.setItem('roles', JSON.stringify(data.roles));
           } else {
-            console.error('userage is undefined');
+            console.error('Roles are undefined');
           }
-
+  
           this.router.navigateByUrl('/account');
         } else {
-          alert("email or password incorrect");
+          alert("Email or password incorrect");
           this.router.navigateByUrl('/login');
         }
       }, error => {
@@ -70,4 +69,5 @@ export class LoginComponent {
         alert('An error occurred while logging in. Please try again.');
       });
   }
+  
 }

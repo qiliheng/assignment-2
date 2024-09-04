@@ -6,7 +6,7 @@ module.exports = function(req, res) {
     const newUser = {
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password,
+        pwd: req.body.pwd,
         roles: ['chat-user'], // Default role
         id: Date.now(), // Generate a unique ID based on the current timestamp
         groups: [] // Initialize an empty array for groups

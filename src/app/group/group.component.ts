@@ -43,7 +43,10 @@ export class GroupComponent implements OnInit {
 
   joinGroup(groupId: number) {
     console.log('Joining group:', groupId);
+
+    this.selectedGroup = this.groups.find(group => group.id === groupId);
   
+    
     if (!this.joinedGroups.includes(groupId)) {
       this.joinedGroups.push(groupId);
       console.log(`Group ${groupId} joined successfully.`);
