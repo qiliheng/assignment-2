@@ -1,18 +1,8 @@
-<div *ngIf="groups.length > 0">
-  <h2>Groups</h2>
-  <ul>
-    <li *ngFor="let group of groups">
-      <h3>{{ group.groupName }}</h3>
-      <p>Created by: {{ group.createdBy }}</p>
-      <h4>Channels</h4>
-      <ul>
-        <li *ngFor="let channel of group.channels">
-          {{ channel.channelName }}
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
+<ul>
+  <li *ngFor="let group of groups" (click)="selectGroup(group.userid)">
+    {{ group.name }}
+  </li>
+</ul>
 <div *ngIf="groups.length === 0">
-  <p>No groups available.</p>
+  No groups available.
 </div>

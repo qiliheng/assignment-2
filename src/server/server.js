@@ -4,12 +4,17 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const fs = require('fs');
+const path = require('path'); // <-- Add this line
 
 app.use(cors());
 const http = require('http').Server(app);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Serve static files from the data directory
+app.use('/server/data', express.static(path.join(__dirname, 'data')));
+
 
 // Login routes
 app.post('/login', require('./router/postLogin'));
@@ -28,12 +33,10 @@ app.post('/promoteToGroupAdmin', (req, res) => {
         let user = extendedUsers.find(u => u.userid === userId);
 
         if (user) {
-            // Update role in extendedUsers.json
             user.role = 'group-admin';
             fs.writeFile(extendedUsersPath, JSON.stringify(extendedUsers, null, 2), 'utf8', (err) => {
                 if (err) return res.status(500).send('Server error');
                 
-                // Also update role in users.json based on username
                 fs.readFile(usersPath, 'utf8', (err, data) => {
                     if (err) return res.status(500).send('Server error');
 
@@ -70,12 +73,10 @@ app.post('/promoteToSuperAdmin', (req, res) => {
         let user = extendedUsers.find(u => u.userid === userId);
 
         if (user) {
-            // Update role in extendedUsers.json
             user.role = 'super-admin';
             fs.writeFile(extendedUsersPath, JSON.stringify(extendedUsers, null, 2), 'utf8', (err) => {
                 if (err) return res.status(500).send('Server error');
-
-                // Also update role in users.json based on username
+                
                 fs.readFile(usersPath, 'utf8', (err, data) => {
                     if (err) return res.status(500).send('Server error');
 
@@ -102,10 +103,6 @@ app.post('/promoteToSuperAdmin', (req, res) => {
 app.post('/removeUser', (req, res) => {
     const userId = req.body.userId;
     console.log(`Received request to remove user with ID: ${userId}`);
-
-    // Log the request headers and body for debugging
-    console.log('Request Headers:', req.headers);
-    console.log('Request Body:', req.body);
 
     const usersPath = './data/users.json';
     const extendedUsersPath = './data/extendedUsers.json';
@@ -154,7 +151,6 @@ app.post('/removeUser', (req, res) => {
         }
     });
 });
-
 
 // Start the server
 http.listen(PORT, () => {
