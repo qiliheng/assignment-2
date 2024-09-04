@@ -1,8 +1,15 @@
-<ul>
-  <li *ngFor="let group of groups" (click)="selectGroup(group.userid)">
-    {{ group.name }}
-  </li>
-</ul>
-<div *ngIf="groups.length === 0">
-  No groups available.
+<div>
+  <h3>Groups</h3>
+  <ul>
+    <li *ngFor="let group of groups" (click)="selectGroup(group.groupId)">
+      {{ group.groupName }}
+    </li>
+  </ul>
+
+  <h3 *ngIf="channels.length">Channels in Selected Group</h3>
+  <ul>
+    <li *ngFor="let channel of channels">
+      {{ channel.channelName }}
+    </li>
+  </ul>
 </div>

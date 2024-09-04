@@ -1,32 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common'; // Correct import for CommonModule
+import { NgIf, NgFor, CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-group',
-    standalone: true,
-    imports: [CommonModule], // Ensure CommonModule is imported
-    templateUrl: './group.component.html',
-    styleUrls: ['./group.component.css']
+  selector: 'app-group',
+  standalone: true,
+  imports: [CommonModule, NgIf, NgFor],  // Ensure CommonModule, NgIf, and NgFor are imported
+  templateUrl: './group.component.html',
+  styleUrls: ['./group.component.css']
 })
 export class GroupComponent implements OnInit {
-    groups: any[] = [];
+  groups: any[] = [];
+  channels: any[] = [];
+  selectedGroup: any = null;
 
-    constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-    ngOnInit() {
-        this.http.get('/server/data/group.json').subscribe(
-            (data: any) => {
-                this.groups = data;
-            },
-            (error) => {
-                console.error('Error loading group.json', error);
-            }
-        );
-    }
+  ngOnInit() {
+    this.httpClient.get('http://s5294121.elf.ict.griffith.edu.au:8888/server/data/group.json')
+      .subscribe(
+        (data: any) => {
+          this.groups = data;
+        },
+        (error: any) => {
+          console.error('Error loading groups', error);
+        }
+      );
+  }
 
-    selectGroup(groupId: number): void {
-        console.log(`Group selected: ${groupId}`);
-        // Add your logic here for selecting the group
-    }
+  selectGroup(groupId: number) {
+    console.log('Group selected:', groupId);
+    this.selectedGroup = this.groups.find(group => group.id === groupId);
+
+    this.httpClient.get(`http://s5294121.elf.ict.griffith.edu.au:8888/server/data/channel/${groupId}`)
+      .subscribe(
+        (data: any) => {
+          this.channels = data.channels;
+        },
+        (error: any) => {
+          console.error('Error loading channels', error);
+        }
+      );
+  }
 }
+

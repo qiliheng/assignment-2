@@ -20,6 +20,10 @@ app.use('/server/data', express.static(path.join(__dirname, 'data')));
 app.post('/login', require('./router/postLogin'));
 app.post('/loginafter', require('./router/postLoginAfter'));
 
+app.post('/group', require('./router/group'));
+
+
+
 // Promote a user to Group Admin
 app.post('/promoteToGroupAdmin', (req, res) => {
     const userId = req.body.userId;
@@ -151,6 +155,21 @@ app.post('/removeUser', (req, res) => {
         }
     });
 });
+
+app.get('/server/data/channels/:groupId', (req, res) => {
+    const groupId = req.params.groupId;
+    const channelsPath = './data/channel.json'; // Ensure this path is correct
+
+    fs.readFile(channelsPath, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Server error');
+
+        let channels = JSON.parse(data);
+        let groupChannels = channels.filter(channel => channel.groupId === parseInt(groupId));
+
+        res.json(groupChannels);
+    });
+});
+
 
 // Start the server
 http.listen(PORT, () => {
