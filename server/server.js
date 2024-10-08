@@ -13,7 +13,7 @@ const server = require('./listen.js');
 //const request = require('request');
 
 //Define port used for the server
-const PORT = 3000;
+const PORT = 8888;
 //Apply express middleware
 app.use(cors());
 

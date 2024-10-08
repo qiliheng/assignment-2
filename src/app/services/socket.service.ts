@@ -1,31 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
-import { io, Socket } from 'socket.io-client';
-
-const SERVER_URL = 'http://s5294121.elf.ict.griffith.edu.au:8080/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  private socket!: Socket;
+  constructor(private socket: Socket) {}
 
-  constructor() { }
-
-  initSocket() {
-    this.socket = io(SERVER_URL);
-    return () => { this.socket.disconnect(); }
+  initSocket(): void {
+    this.socket.connect();
   }
 
-  send(message: string) {
+  sendMessage(message: string): void {
     this.socket.emit('message', message);
   }
 
-  getMessage(): Observable<any> {
-    return new Observable(observer => {
-      this.socket.on('message', (data) => {
-        observer.next(data);
-      });
-    });
+  getMessage(): Observable<string> {
+    return this.socket.fromEvent<string>('message');
+  }
+
+  disconnect(): void {
+    this.socket.disconnect();
   }
 }

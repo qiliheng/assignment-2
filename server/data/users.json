@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "username": "superadmin",
+    "email": "superadmin@example.com",
+    "pwd": "123",
+    "roles": [
+      "super-admin"
+    ],
+    "groups": []
+  },
+  {
+    "id": 2,
+    "username": "groupadmin",
+    "email": "groupadmin@example.com",
+    "pwd": "123",
+    "roles": [
+      "group-admin"
+    ],
+    "groups": []
+  },
+  {
+    "id": 3,
+    "username": "user1",
+    "email": "user1@example.com",
+    "pwd": "user123",
+    "roles": [
+      "chat-user"
+    ],
+    "groups": []
+  },
+  {
+    "id": 4,
+    "username": "user2",
+    "email": "user2@example.com",
+    "pwd": "user123",
+    "roles": [
+      "chat-user"
+    ],
+    "groups": []
+  },
+  {
+    "id": 5,
+    "username": "user3",
+    "email": "user3@example.com",
+    "pwd": "user123",
+    "roles": [
+      "chat-user"
+    ],
+    "groups": []
+  },
+  {
+    "id": 6,
+    "username": "user4",
+    "email": "user4@example.com",
+    "pwd": "user123",
+    "roles": [
+      "chat-user"
+    ],
+    "groups": []
+  },
+  {
+    "id": 7,
+    "username": "user5",
+    "email": "user5@example.com",
+    "pwd": "user123",
+    "roles": [
+      "chat-user"
+    ],
+    "groups": []
+  },
+  {
+    "id": 8,
+    "username": "user6",
+    "email": "user6@example.com",
+    "pwd": "user123",
+    "roles": [
+      "chat-user"
+    ],
+    "groups": []
+  },
+  {
+    "username": "12345@email.com",
+    "email": "qiliheng040114@gmail.com",
+    "pwd": "123",
+    "roles": [
+      "chat-user"
+    ],
+    "id": 1725459641787,
+    "groups": []
+  },
+  {
+    "username": "t3",
+    "email": "qiliheng040114@gmail.com",
+    "pwd": "pwd",
+    "roles": [
+      "chat-user"
+    ],
+    "id": 1725463394383,
+    "groups": []
+  }
+]

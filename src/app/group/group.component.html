@@ -1,4 +1,3 @@
-<!-- group.component.html -->
 <div>
   <h3>Groups</h3>
   <ul>
@@ -24,8 +23,8 @@
   <h3>Group Chat - {{ selectedGroup.name }}</h3>
   <form>
     <div class="form-group">
-      <label for="messagecontent">New Message</label>
-      <input type="text" [(ngModel)]="messagecontent" name="messagecontent" id="messagecontent" class="form-control" />
+      <label for="messageContent">New Message</label>
+      <input type="text" [(ngModel)]="messageContent" name="messageContent" id="messageContent" class="form-control" />
     </div>
     <div class="form-group">
       <button (click)="chat()" class="btn btn-primary">Send</button>
@@ -36,7 +35,7 @@
   </ul>
 </div>
 
-<!-- Rest of the existing form for creating channels and groups -->
+<!-- Form for creating new channels, visible only to the creator -->
 <div *ngIf="selectedGroup?.createdBy === username">
   <h3>Create New Channel</h3>
   <div>
@@ -48,13 +47,16 @@
   </div>
 </div>
 
+<!-- Form for creating new groups, visible based on role -->
 <div *ngIf="!userRole.includes('chat-user')">
   <h3>Create New Group</h3>
   <form (ngSubmit)="createGroup()">
     <label for="groupName">Group Name:</label>
     <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" required>
+    
     <label for="groupDescription">Description:</label>
     <input type="text" id="groupDescription" [(ngModel)]="newGroupDescription" name="groupDescription">
+    
     <button type="submit">Create Group</button>
   </form>
 </div>

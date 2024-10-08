@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1,
+    "name": "Group A",
+    "description": "This is Group A",
+    "createdBy": "superadmin",
+    "channels": [
+      {
+        "id": 101,
+        "name": "Channel A1",
+        "description": "This is Channel A1 of Group A"
+      },
+      {
+        "id": 102,
+        "name": "Channel A2",
+        "description": "This is Channel A2 of Group A"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Group B",
+    "description": "This is Group B",
+    "createdBy": "groupadmin",
+    "channels": [
+      {
+        "id": 201,
+        "name": "Channel B1",
+        "description": "This is Channel B1 of Group B"
+      },
+      {
+        "id": 202,
+        "name": "Channel B2",
+        "description": "This is Channel B2 of Group B"
+      },
+      {
+        "id": 1725467321520,
+        "name": "Channel3",
+        "description": "123456",
+        "createdBy": "groupadmin"
+      },
+      {
+        "id": 1725468521733,
+        "name": "Channel1",
+        "description": "123456",
+        "createdBy": "groupadmin"
+      }
+    ]
+  },
+  {
+    "name": "Group C",
+    "description": "123",
+    "createdBy": "groupadmin",
+    "id": 3,
+    "channels": [
+      {
+        "id": 1725467291027,
+        "name": "Channel1",
+        "description": "123456",
+        "createdBy": "groupadmin"
+      },
+      {
+        "id": 1725467520869,
+        "name": "Channel4",
+        "description": "123456",
+        "createdBy": "groupadmin"
+      }
+    ]
+  }
+]
