@@ -1,13 +1,15 @@
+// group.component.ts
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NgIf, NgFor, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { SocketService } from '../services/socket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-group',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.css']
 })
@@ -16,22 +18,29 @@ export class GroupComponent implements OnInit {
   channels: any[] = [];
   selectedGroup: any = null;
   joinedGroups: any[] = [];
-
   newGroupName: string = '';
   newGroupDescription: string = '';
-
   newChannelName: string = '';
   newChannelDescription: string = '';
-
   username: string = '';
   userRole: string[] = []; 
 
-  constructor(private httpClient: HttpClient, @Inject(PLATFORM_ID) private platformId: object) {}
+  // Chat properties
+  messagecontent: string = '';
+  messages: string[] = [];
+  ioConnection!: Subscription;
+
+  constructor(
+    private httpClient: HttpClient,
+    private socketService: SocketService,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   ngOnInit() {
+    // Existing initialization logic for groups and channels
     if (isPlatformBrowser(this.platformId)) {
       this.username = sessionStorage.getItem('username') || '';
-      this.userRole = JSON.parse(sessionStorage.getItem('roles') || '[]');  // Parse as array
+      this.userRole = JSON.parse(sessionStorage.getItem('roles') || '[]');
     }
 
     this.httpClient.get('http://s5294121.elf.ict.griffith.edu.au:8888/server/data/group.json')
@@ -43,8 +52,12 @@ export class GroupComponent implements OnInit {
           console.error('Error loading groups', error);
         }
       );
+
+    // Chat initialization
+    this.initIoConnection();
   }
 
+  // Existing group and channel methods (unchanged)
   selectGroup(groupId: number) {
     console.log('Group selected:', groupId);
     this.selectedGroup = this.groups.find(group => group.id === groupId);
@@ -59,9 +72,8 @@ export class GroupComponent implements OnInit {
 
   joinGroup(groupId: number) {
     console.log('Joining group:', groupId);
-
     this.selectedGroup = this.groups.find(group => group.id === groupId);
-  
+
     if (!this.joinedGroups.includes(groupId)) {
       this.joinedGroups.push(groupId);
       console.log(`Group ${groupId} joined successfully.`);
@@ -85,7 +97,7 @@ export class GroupComponent implements OnInit {
       if (channel) {
         const userId = isPlatformBrowser(this.platformId) ? sessionStorage.getItem('userid') : null;
         console.log(`User ${userId} is joining channel ${channel.name} in group ${this.selectedGroup.name}`);
-        alert("joined perfectly")
+        alert("joined perfectly");
       } else {
         console.error('Channel not found');
       }
@@ -168,9 +180,9 @@ export class GroupComponent implements OnInit {
     const groupId = this.selectedGroup.id; 
 
     const deleteData = {
-        channelId: channelId,
-        groupId: groupId,
-        username: username
+      channelId: channelId,
+      groupId: groupId,
+      username: username
     };
 
     this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/deleteChannel', deleteData)
@@ -185,6 +197,23 @@ export class GroupComponent implements OnInit {
           alert('There was a problem deleting the channel.');
         }
       );
-}
+  }
 
+  // Chat methods
+  private initIoConnection() {
+    this.socketService.initSocket();
+    this.ioConnection = this.socketService.getMessage()
+      .subscribe((message: string) => {
+        this.messages.push(message);
+      });
+  }
+
+  public chat() {
+    if (this.messagecontent) {
+      this.socketService.send(this.messagecontent);
+      this.messagecontent = '';
+    } else {
+      console.log("no message");
+    }
+  }
 }
