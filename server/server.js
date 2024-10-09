@@ -8,26 +8,25 @@ const path = require('path');
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: "http://s5294121.elf.ict.griffith.edu.au:8080", // Allow specific origin
+    origin: "http://s5294121.elf.ict.griffith.edu.au:8080", 
     methods: ["GET", "POST"],
-    credentials: true // Allows cookies and credentials
+    credentials: true 
   }
 });
 const sockets = require('./sockets.js');
 
-// Apply middleware
+// Apply CORS 
 app.use(cors({
-  origin: 'http://s5294121.elf.ict.griffith.edu.au:8080', // Allow specific origin
+  origin: 'http://s5294121.elf.ict.griffith.edu.au:8080', 
   methods: ['GET', 'POST'],
-  credentials: true // Allows cookies and credentials
+  credentials: true 
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Serve static files from the data directory
 app.use('/server/data', express.static(path.join(__dirname, 'data')));
 
-// Login routes
+// Define POST routes for user and group actions
 app.post('/login', require('./router/postLogin'));
 app.post('/joinChannel', require('./router/postJoinChannel'));
 app.post('/CreateGroup', require('./router/postCreateGroup'));
@@ -40,7 +39,7 @@ app.post('/removeUser', require('./router/postRemoveUser'));
 app.post('/joinGroup', require('./router/postJoinGroup'));
 app.post('/createUser', require('./router/postCreateUser'));
 
-// Delete user route
+// Handle delete user requests 
 app.post('/deleteUser', (req, res) => {
     const { username } = req.body;
     const usersPath = path.join(__dirname, 'data', 'users.json');
@@ -61,13 +60,9 @@ app.post('/deleteUser', (req, res) => {
     });
 });
 
-// Setup socket connections
 sockets.connect(io, PORT);
 
-// Start server listening for requests
-// Start server listening for requests
+// Start server and listen on port
 http.listen(PORT, () => {
-  console.log('Server listening on: ' + PORT);
+    console.log('Server listening on: ' + PORT);
 });
-
-module.exports = http; // Export http instead of server

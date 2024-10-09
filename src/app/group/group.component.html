@@ -1,25 +1,30 @@
 <div>
   <h3>Groups</h3>
   <ul>
+    <!-- List of available groups with join and delete options -->
     <li *ngFor="let group of groups" (click)="selectGroup(group.id)">
       {{ group.name }}
       <button (click)="joinGroup(group.id)">Join Group</button>
+      <!-- Only display delete option if the user created the group -->
       <button *ngIf="group.createdBy === username" (click)="deleteGroup()">Delete Group</button>
     </li>
   </ul>
 
+  <!-- Channels list for selected group -->
   <h3 *ngIf="channels.length">Channels in Selected Group</h3>
   <ul>
+    <!-- List of channels within the selected group with join and delete options -->
     <li *ngFor="let channel of channels">
-      {{ channel.name }} 
+      {{ channel.name }}
       <button (click)="joinChannel(channel.channelId)">Join</button>
+      <!-- Only display delete if the user created the group -->
       <button *ngIf="selectedGroup.createdBy === username" (click)="deleteChannel(channel.channelId)">Delete Channel</button>
     </li>
   </ul>
 </div>
 
 <div *ngIf="selectedGroup">
-  <!-- Chat UI -->
+  <!-- Chat UI for selected group -->
   <h3>Group Chat - {{ selectedGroup.name }}</h3>
   <form>
     <div class="form-group">
@@ -30,24 +35,27 @@
       <button type="button" (click)="chat()" class="btn btn-primary">Send</button>
     </div>
   </form>
+  <!-- Display of chat messages -->
   <ul>
     <li *ngFor="let m of messages">{{ m.username }}: {{ m.text }}</li>
   </ul>
 </div>
 
-<!-- Form for creating new channels, visible only to the creator -->
+<!-- Form for creating a new channel; visible only to the group creator -->
 <div *ngIf="selectedGroup?.createdBy === username">
   <h3>Create New Channel</h3>
   <div>
     <label for="channelName">Channel Name:</label>
     <input type="text" id="channelName" [(ngModel)]="newChannelName" name="channelName" required>
+    
     <label for="channelDescription">Description:</label>
     <input type="text" id="channelDescription" [(ngModel)]="newChannelDescription" name="channelDescription">
+    
     <button (click)="createChannel()">Create Channel</button>
   </div>
 </div>
 
-<!-- Form for creating new groups, visible based on role -->
+<!-- Form for creating a new group -->
 <div *ngIf="!userRole.includes('chat-user')">
   <h3>Create New Group</h3>
   <form (ngSubmit)="createGroup()">

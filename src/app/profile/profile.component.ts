@@ -6,7 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-
 const BACKEND_URL = 'http://s5294121.elf.ict.griffith.edu.au:8888';
 
 @Component({
@@ -27,6 +26,7 @@ export class ProfileComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
+  // Initialize component with session data
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.username = sessionStorage.getItem('username') || '';
@@ -36,20 +36,23 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  // Function to update user profile
   editFunc() {
-    let userobj = {
-      "userid": this.userid,
-      "username": this.username,
-      "userbirthdate": this.userbirthdate,
-      "userage": this.userage
+    const userobj = {
+      userid: this.userid,
+      username: this.username,
+      userbirthdate: this.userbirthdate,
+      userage: this.userage
     };
-  
+
+    // Send POST request to update profile on the server
     this.httpClient.post<any>(BACKEND_URL + '/loginafter', userobj, httpOptions)
       .subscribe({
-        next: (m: any) => {
-          console.log('Profile updated successfully:', m);
+        next: (response) => {
+          console.log('Profile updated successfully:', response);
           alert("Profile update successful");
-  
+
+          // Update session data after a successful response
           sessionStorage.setItem('userid', String(this.userid));
           sessionStorage.setItem('username', this.username);
           sessionStorage.setItem('userbirthdate', this.userbirthdate);
@@ -61,5 +64,4 @@ export class ProfileComponent implements OnInit {
         }
       });
   }
-  
 }

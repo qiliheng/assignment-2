@@ -1,11 +1,12 @@
 import * as chai from 'chai';
 import chaiHttp from 'chai-http';
-import postLogin from '../../server/router/postLogin.js'; // Adjust this path as necessary
+import postLogin from '../../server/router/postLogin.js'; 
 
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('Integration Tests for postLogin', () => {
+// Your test suite here
+describe('Unit Tests for postLogin', () => {
   
   it('should return error when no credentials are provided', (done) => {
     const req = { body: {} };
@@ -23,12 +24,12 @@ describe('Integration Tests for postLogin', () => {
   it('should log in successfully with valid username and password', (done) => {
     chai.request('http://localhost:8888')
       .post('/login')
-      .send({ username: 'validUsername', pwd: 'validPassword' }) // Use actual credentials for the test
+      .send({ username: 'validUsername', pwd: 'validPassword' }) // Use valid test credentials
       .end((err, res) => {
         if (err) done(err);
         expect(res.body).to.have.property('ok', true);
-        expect(res.body).to.have.property('username', 'validUsername'); // Adjust according to response structure
+        expect(res.body).to.have.property('username', 'validUsername');
         done();
       });
   });
-})
+});

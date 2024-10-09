@@ -14,6 +14,7 @@ export class SuperAdminComponent {
 
   constructor(private userService: UserService) {}
 
+  // Promote user to Group Admin
   promoteToGroupAdmin() {
     this.userService.promoteToGroupAdmin(this.username).subscribe(response => {
       console.log(response.message);
@@ -24,6 +25,7 @@ export class SuperAdminComponent {
     });
   }
 
+  // Promote user to Super Admin
   promoteToSuperAdmin() {
     this.userService.promoteToSuperAdmin(this.username).subscribe(response => {
       console.log(response.message);
@@ -34,6 +36,7 @@ export class SuperAdminComponent {
     });
   }
 
+  // Remove user 
   removeUser() {
     this.userService.removeUser(this.username).subscribe(response => {
       console.log(response.message);

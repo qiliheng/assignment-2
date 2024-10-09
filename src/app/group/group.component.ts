@@ -41,11 +41,13 @@ export class GroupComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Check if running in browser and load user details from session
     if (isPlatformBrowser(this.platformId)) {
       this.username = sessionStorage.getItem('username') || '';
       this.userRole = JSON.parse(sessionStorage.getItem('roles') || '[]');
     }
 
+    // Fetch group data on component load
     this.httpClient.get('http://s5294121.elf.ict.griffith.edu.au:8888/server/data/group.json').subscribe(
       (data: any) => {
         this.groups = data;
@@ -55,12 +57,12 @@ export class GroupComponent implements OnInit {
       }
     );
 
-    // Initialize socket connection for chat
+    // Initialize socket for chat
     this.initIoConnection();
   }
 
+  // Set up socket connection
   private initIoConnection() {
-    // Listen to incoming messages and filter by selected channel
     this.ioConnection = this.socket.fromEvent<{ username: string, text: string, channelId: number }>('message')
       .subscribe((data) => {
         if (data.channelId === this.selectedGroup?.id) {
@@ -69,6 +71,7 @@ export class GroupComponent implements OnInit {
       });
   }
 
+  // Send chat message by socket
   public chat() {
     if (this.messageContent.trim()) {
       const messageData = {
@@ -81,10 +84,9 @@ export class GroupComponent implements OnInit {
     }
   }
 
+  // Select a group and load channels when join
   selectGroup(groupId: number) {
-    console.log('Group selected:', groupId);
     this.selectedGroup = this.groups.find(group => group.id === groupId);
-
     if (this.joinedGroups.includes(groupId)) {
       this.channels = this.selectedGroup.channels;
     } else {
@@ -93,35 +95,25 @@ export class GroupComponent implements OnInit {
     }
   }
 
+  // Join a selected group
   joinGroup(groupId: number) {
-    console.log('Joining group:', groupId);
     this.selectedGroup = this.groups.find(group => group.id === groupId);
-
     if (!this.joinedGroups.includes(groupId)) {
       this.joinedGroups.push(groupId);
-      console.log(`Group ${groupId} joined successfully.`);
       alert(`You have successfully joined the group: ${this.selectedGroup.name}`);
-
-      if (this.selectedGroup && this.selectedGroup.id === groupId) {
-        this.channels = this.selectedGroup.channels;
-      }
+      this.channels = this.selectedGroup.channels;
     } else {
-      console.log(`Already joined group ${groupId}.`);
       alert(`You have already joined the group: ${this.selectedGroup.name}`);
     }
   }
 
+  // Join a channel within a joined group
   joinChannel(channelId: number) {
-    console.log('Joining channel:', channelId);
-
     if (this.joinedGroups.includes(this.selectedGroup.id)) {
       const channel = this.channels.find(c => c.channelId === channelId);
-
       if (channel) {
-        const userId = isPlatformBrowser(this.platformId) ? sessionStorage.getItem('userid') : null;
-        console.log(`User ${userId} is joining channel ${channel.name} in group ${this.selectedGroup.name}`);
+        this.messages = []; // Clear messages for new channel
         alert('Joined channel successfully');
-        this.messages = []; // Clear previous messages when joining a new channel
       } else {
         console.error('Channel not found');
       }
@@ -130,90 +122,76 @@ export class GroupComponent implements OnInit {
     }
   }
 
+  // Create new group
   createGroup() {
-    const username = this.username;
-
     const newGroup = {
       name: this.newGroupName,
       description: this.newGroupDescription || '',
-      createdBy: username
+      createdBy: this.username
     };
 
     this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/createGroup', newGroup).subscribe(
       (data: any) => {
-        console.log('Group created successfully:', data);
         this.groups.push(data);
         alert(`Group ${this.newGroupName} created successfully!`);
       },
       (error: any) => {
-        console.error('Error creating group:', error);
         alert('There was a problem creating the group.');
       }
     );
   }
 
+  // Create a new channel in selected group
   createChannel() {
-    const username = this.username;
-    const groupId = this.selectedGroup.id;
-
     const newChannel = {
-      groupId: groupId,
+      groupId: this.selectedGroup.id,
       name: this.newChannelName,
       description: this.newChannelDescription || '',
-      createdBy: username
+      createdBy: this.username
     };
 
     this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/createChannel', newChannel).subscribe(
       (data: any) => {
-        console.log('Channel created successfully:', data);
         this.selectedGroup.channels.push(data);
         alert(`Channel ${this.newChannelName} created successfully!`);
       },
       (error: any) => {
-        console.error('Error creating channel:', error);
         alert('You are not authorized to create a channel in this group.');
       }
     );
   }
 
+  // Delete the selected group
   deleteGroup() {
     if (confirm('Are you sure you want to delete this group?')) {
       const groupId = this.selectedGroup.id;
-      const username = this.username;
-
-      this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/deleteGroup', { groupId, username }).subscribe(
+      this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/deleteGroup', { groupId, username: this.username }).subscribe(
         (response: any) => {
-          console.log(response.message);
           this.groups = this.groups.filter(group => group.id !== groupId);
           this.selectedGroup = null;
           alert('Group deleted successfully');
         },
         (error: any) => {
-          console.error('Error deleting group:', error);
           alert('There was a problem deleting the group.');
         }
       );
     }
   }
 
+  // Delete a channel within the selected group
   deleteChannel(channelId: number) {
-    const username = sessionStorage.getItem('username'); 
-    const groupId = this.selectedGroup.id; 
-
     const deleteData = {
       channelId: channelId,
-      groupId: groupId,
-      username: username
+      groupId: this.selectedGroup.id,
+      username: this.username
     };
 
     this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/deleteChannel', deleteData).subscribe(
       (response: any) => {
-        console.log('Channel deleted successfully:', response);
         this.selectedGroup.channels = this.selectedGroup.channels.filter((c: any) => c.id !== channelId);
         alert('Channel deleted successfully!');
       },
       (error: any) => {
-        console.error('Error deleting channel:', error);
         alert('There was a problem deleting the channel.');
       }
     );

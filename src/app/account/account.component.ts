@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core'; 
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-account',
@@ -10,7 +10,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-
 export class AccountComponent implements OnInit {
   userid = 0;
   username = '';
@@ -22,8 +21,7 @@ export class AccountComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  
-
+  // Initialize user data from session storage
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.username = sessionStorage.getItem('username') || '';
@@ -33,6 +31,7 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  // Delete user account via POST request
   deleteAccount() {
     const username = sessionStorage.getItem('username');
 
@@ -42,19 +41,19 @@ export class AccountComponent implements OnInit {
       this.httpClient.post('http://s5294121.elf.ict.griffith.edu.au:8888/deleteUser', deleteUser)
         .subscribe(
           (response: any) => {
-            console.log('User deleted successfully:', response);
+            console.log('User deleted:', response);
             alert('Your account has been deleted.');
             sessionStorage.clear();
             window.location.href = '/login';
           },
           (error: any) => {
-            console.error('Error deleting user:', error);
-            alert('There was a problem deleting your account.');
+            console.error('Deletion error:', error);
+            alert('Error deleting account.');
           }
         );
     } else {
-      console.error('No user is logged in.');
-      alert('No user is logged in.');
+      console.error('No user logged in.');
+      alert('No user logged in.');
     }
   }
 }
