@@ -65,6 +65,9 @@ app.post('/deleteUser', (req, res) => {
 sockets.connect(io, PORT);
 
 // Start server listening for requests
+// Start server listening for requests
 http.listen(PORT, () => {
-    console.log('Server listening on: ' + PORT);
+  console.log('Server listening on: ' + PORT);
 });
+
+module.exports = http; // Export http instead of server
