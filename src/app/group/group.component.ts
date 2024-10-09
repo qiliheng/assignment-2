@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   providers: [
     {
       provide: Socket,
-      useFactory: () => new Socket({ url: 'http://s5294121.elf.ict.griffith.edu.au:8080', options: {} })
+      useFactory: () => new Socket({ url: 'http://s5294121.elf.ict.griffith.edu.au:8888', options: {} })
     }
   ]
 })
@@ -55,22 +55,27 @@ export class GroupComponent implements OnInit {
       }
     );
 
+    // Initialize socket connection for chat
     this.initIoConnection();
   }
 
+  // Chat-specific functionality
   private initIoConnection() {
+    // Listen to incoming messages
     this.ioConnection = this.socket.fromEvent<string>('message').subscribe((message: string) => {
       this.messages.push(message);
     });
   }
 
   public chat() {
-    if (this.messageContent) {
+    // Send a chat message
+    if (this.messageContent.trim()) {
       this.socket.emit('message', this.messageContent);
-      this.messageContent = '';
+      this.messageContent = ''; // Clear input after sending
     }
   }
 
+  // All other methods remain exactly as you provided
   selectGroup(groupId: number) {
     console.log('Group selected:', groupId);
     this.selectedGroup = this.groups.find(group => group.id === groupId);

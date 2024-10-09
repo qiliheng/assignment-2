@@ -8,15 +8,19 @@ const path = require('path');
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: "s5294121.elf.ict.griffith.edu.au:8080",
+    origin: "http://s5294121.elf.ict.griffith.edu.au:8080", // Allow specific origin
     methods: ["GET", "POST"],
+    credentials: true // Allows cookies and credentials
   }
 });
 const sockets = require('./sockets.js');
-const server = require('./listen.js');
 
 // Apply middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://s5294121.elf.ict.griffith.edu.au:8080', // Allow specific origin
+  methods: ['GET', 'POST'],
+  credentials: true // Allows cookies and credentials
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -63,5 +67,4 @@ sockets.connect(io, PORT);
 // Start server listening for requests
 http.listen(PORT, () => {
     console.log('Server listening on: ' + PORT);
-    server.listen(http, PORT);
 });

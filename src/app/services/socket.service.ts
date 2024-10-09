@@ -1,26 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { io } from 'socket.io-client';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  constructor(private socket: Socket) {}
+  private socket: any;
 
-  initSocket(): void {
-    this.socket.connect();
+  constructor() {
+    // Initialize the connection to the Socket.IO server
+    this.socket = io('http://s5294121.elf.ict.griffith.edu.au:8888', {
+      transports: ['websocket', 'polling'],
+      path: '/socket.io' // Ensure the path matches your server configuration
+    });
   }
 
-  sendMessage(message: string): void {
-    this.socket.emit('message', message);
-  }
+  // Method to emit events
+  emitEvent(eventName: string, data: any): void {
+    this.socket.emit(eventName, data);
+}
 
-  getMessage(): Observable<string> {
-    return this.socket.fromEvent<string>('message');
-  }
-
-  disconnect(): void {
-    this.socket.disconnect();
-  }
+onEvent(eventName: string): Observable<any> {
+    return new Observable<any>(observer => {
+        this.socket.on(eventName, (data: any) => {
+            observer.next(data);
+        });
+    });
+}
 }
