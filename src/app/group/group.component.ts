@@ -31,7 +31,7 @@ export class GroupComponent implements OnInit {
   username: string = '';
   userRole: string[] = [];
   messageContent: string = '';
-  messages: string[] = [];
+  messages: { username: string, text: string }[] = [];
   ioConnection!: Subscription;
 
   constructor(
@@ -59,23 +59,28 @@ export class GroupComponent implements OnInit {
     this.initIoConnection();
   }
 
-  // Chat-specific functionality
   private initIoConnection() {
-    // Listen to incoming messages
-    this.ioConnection = this.socket.fromEvent<string>('message').subscribe((message: string) => {
-      this.messages.push(message);
-    });
+    // Listen to incoming messages and filter by selected channel
+    this.ioConnection = this.socket.fromEvent<{ username: string, text: string, channelId: number }>('message')
+      .subscribe((data) => {
+        if (data.channelId === this.selectedGroup?.id) {
+          this.messages.push({ username: data.username, text: data.text });
+        }
+      });
   }
 
   public chat() {
-    // Send a chat message
     if (this.messageContent.trim()) {
-      this.socket.emit('message', this.messageContent);
+      const messageData = {
+        text: this.messageContent,
+        username: this.username,
+        channelId: this.selectedGroup ? this.selectedGroup.id : null
+      };
+      this.socket.emit('message', messageData);
       this.messageContent = ''; // Clear input after sending
     }
   }
 
-  // All other methods remain exactly as you provided
   selectGroup(groupId: number) {
     console.log('Group selected:', groupId);
     this.selectedGroup = this.groups.find(group => group.id === groupId);
@@ -116,6 +121,7 @@ export class GroupComponent implements OnInit {
         const userId = isPlatformBrowser(this.platformId) ? sessionStorage.getItem('userid') : null;
         console.log(`User ${userId} is joining channel ${channel.name} in group ${this.selectedGroup.name}`);
         alert('Joined channel successfully');
+        this.messages = []; // Clear previous messages when joining a new channel
       } else {
         console.error('Channel not found');
       }

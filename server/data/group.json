@@ -66,5 +66,12 @@
         "createdBy": "groupadmin"
       }
     ]
+  },
+  {
+    "name": "",
+    "description": "",
+    "createdBy": "superadmin",
+    "id": 5,
+    "channels": []
   }
 ]

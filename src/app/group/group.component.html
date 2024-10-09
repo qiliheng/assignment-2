@@ -27,11 +27,11 @@
       <input type="text" [(ngModel)]="messageContent" name="messageContent" id="messageContent" class="form-control" />
     </div>
     <div class="form-group">
-      <button (click)="chat()" class="btn btn-primary">Send</button>
+      <button type="button" (click)="chat()" class="btn btn-primary">Send</button>
     </div>
   </form>
   <ul>
-    <li *ngFor="let m of messages">{{ m }}</li>
+    <li *ngFor="let m of messages">{{ m.username }}: {{ m.text }}</li>
   </ul>
 </div>
 
