@@ -1,20 +1,13 @@
-# Week 4 Tutorial
+# Assignment 2 document
 
+For Assignment 2, I created a GitHub repository named "Assignment 2." This repository is organized by a main branch, which is used for all development and updates. Since no separate testing branches were created at any point, all work was continuously committed and pushed to the main branch as the project progressed.
 
-### Angular
-- `ng new week4tut` 
-- `ng serve`
-- `ng build`
-- `ng generate component Account`
-- `ng generate component Login`
+In this assignment, JSON files are used to store data, with separate files for user and group information. The users.json file contains attributes such as username, email, ID, role, and group, but the group functionality is currently non-operational. The groups.json file incorporates nested channels, meaning each group has its own set of channels stored within the same file, simplifying the structure by consolidating related information.
 
-### Npm
-- `npm install bootstrap --save` 
-- `npm install –g @angular/cli` 
+The Angular application is built around several key components. The LoginComponent handles authentication and stores session data, which is accessible across various components. The GroupComponent is a crucial part of the application as it displays groups and their corresponding channels, allowing user interaction. Supporting services include UserService, which allows administrators to manage user roles; GroupService, which allows administrators to create and delete groups; and ChannelService, used by group creators to manage channels. Additionally, AuthService handles login authorization and ensures user-specific access throughout the application. These components are linked in app.route.ts, which defines the path for each view, enabling seamless navigation between login, profile, account, and other components.
 
-### GIT
-- `git init` 
-- `git add -A`
-- `git commit -m week4` 
-- `git remote add origin https://github.com/qiliheng/week4.git`
-- `git push -u origin master`
+The server utilizes Node.js modules, primarily express and fs. The express module aids in handling HTTP requests and routing, while fs is used for reading and writing JSON data files. These modules support the main routing and server setup outlined in server.js. The server employs a series of routes, such as postLogin, postCreateChannel, postCreateGroup, postDeleteGroup, postDeleteChannel, postJoinChannel, postJoinGroup, postPromoteToGroupAdmin, postPromoteToSuperAdmin, and postRemoveUser. Each route provides specific functionality, ranging from logging in users to managing groups and channels.
+
+Client-server interaction revolves around three primary workflows. Firstly, the login process involves the LoginComponent sending a POST request to postLogin, and upon successful response, session data is stored. Secondly, group and channel management operations, such as creating or deleting groups or channels, involve sending requests from the GroupComponent to the corresponding server routes, which update the JSON files and return responses to update the client-side display. Lastly, user management allows super administrators to promote or remove users by sending requests to update the users.json file, with the client interface reflecting these changes accordingly.
+
+This setup ensures a comprehensive and interconnected system that maintains data consistency between the server and client through JSON file updates and dynamic content rendering on the Angular frontend.
